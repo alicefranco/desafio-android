@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import br.pprojects.swapp.models.Character
 
-@Database(entities = [Character::class], version = 3)
+@Database(entities = [Character::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun CharacterDao() : CharacterDao
 

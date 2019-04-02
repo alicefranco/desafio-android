@@ -40,6 +40,47 @@ class CharacterRepository {
             })
     }
 
+    fun getCharacterDetails(id: Int) : LiveData<Character>?{
+        //refreshCharacterDetails(id)
+        return characterDao?.getCharacterDetails(id)
+    }
+
+    fun updateFavorite(id: Int, value: Boolean){
+        if(value) refreshFavorite(id)
+        characterDao?.updateFavorite(id, value)
+    }
+
+    fun refreshFavorite(id: Int){
+        characterWebservice?.updateFavorite(id, {
+
+        }, {
+
+        })
+    }
+
+    fun getAllFavorites() : LiveData<List<Character>>?{
+        return characterDao?.getAllFavorites()
+    }
+
+
+    private fun refreshCharacterDetails(id: Int){
+//        val characterDetails = characterDao?.getCharacterDetails(id)
+//
+//        if(characterDetails?.value?.id == null){
+//            characterWebservice?.getCharacterDetails(id,{
+//                id
+//            }, {
+//
+//            })
+//        }
+    }
+
+
+
+
+
+
+
     private fun characterWsToCharacter(page: Int, characterWS: CharacterWS) : Character{
         return Character().apply {
             this.pageReference = page

@@ -118,4 +118,14 @@
         app:layout_constraintEnd_toStartOf="@+id/tv_name"
         app:layout_constraintTop_toTopOf="@+id/tv_name"
         app:srcCompat="@drawable/ic_question" />
+
+    <ImageView
+        android:id="@+id/tv_go_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_go_back" />
 </android.support.constraint.ConstraintLayout>
