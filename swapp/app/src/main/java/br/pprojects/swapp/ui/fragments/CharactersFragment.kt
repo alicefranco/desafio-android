@@ -1,15 +1,26 @@
 package br.pprojects.swapp.ui.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import br.pprojects.swapp.models.Character
+import br.pprojects.swapp.App
 import br.pprojects.swapp.ui.adapters.LinearListAdapter
 import br.pprojects.swapp.R
+import br.pprojects.swapp.data.database.CharacterDao
+import br.pprojects.swapp.data.webservice.CharacterWebservice
+import br.pprojects.swapp.models.Character
+import br.pprojects.swapp.models.CharacterWS
+import br.pprojects.swapp.repository.CharacterRepository
+import br.pprojects.swapp.viewmodels.CharactersViewModel
 import kotlinx.android.synthetic.main.planets_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CharactersFragment : Fragment() {
     private var manager: LinearLayoutManager? = null
@@ -32,18 +43,17 @@ class CharactersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var characters = listOf(
-            Character("Alice", "M", "15", "10"),
-            Character("Alice", "F", "15", "10"),
-            Character("Alice", "F", "15", "10"),
-            Character("Alice", "M", "15", "10")
-        )
 
-        manager = LinearLayoutManager(activity)
-        adapter = LinearListAdapter(context!!, characters, {})
-        rv_characters.layoutManager = manager
-        rv_characters.adapter = adapter
+        var viewModel = ViewModelProviders.of(this).get(CharactersViewModel::class.java)
 
+        viewModel.firstCharacters.observe(this, Observer<List<Character>> {
+            var characters = it ?: listOf()
+            manager = LinearLayoutManager(activity)
+            adapter = LinearListAdapter(context!!, {})
+            adapter?.submitList(characters)
+            rv_characters.layoutManager = manager
+            rv_characters.adapter = adapter
+        })
 
     }
 
