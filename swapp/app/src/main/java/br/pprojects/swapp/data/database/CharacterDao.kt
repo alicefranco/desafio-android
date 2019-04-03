@@ -1,10 +1,7 @@
 package br.pprojects.swapp.data.database
 
 import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Update
+import android.arch.persistence.room.*
 import br.pprojects.swapp.models.Character
 
 @Dao
@@ -20,6 +17,9 @@ interface CharacterDao {
 
     @Query("SELECT * FROM character WHERE id == :id")
     fun getCharacterDetails(id: Int): LiveData<Character>
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateCharacterDetails(character: Character)
 
     @Query("UPDATE character SET favorited = :value WHERE id == :id")
     fun updateFavorite(id: Int, value: Int)

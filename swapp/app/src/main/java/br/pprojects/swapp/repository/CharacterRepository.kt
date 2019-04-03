@@ -41,7 +41,7 @@ class CharacterRepository {
     }
 
     fun getCharacterDetails(id: Int) : LiveData<Character>?{
-        //refreshCharacterDetails(id)
+        refreshCharacterDetails(id)
         return characterDao?.getCharacterDetails(id)
     }
 
@@ -64,22 +64,33 @@ class CharacterRepository {
 
 
     private fun refreshCharacterDetails(id: Int){
-//        val characterDetails = characterDao?.getCharacterDetails(id)
-//
-//        if(characterDetails?.value?.id == null){
-//            characterWebservice?.getCharacterDetails(id,{
-//                id
-//            }, {
-//
-//            })
-//        }
+        val characterDetails = characterDao?.getCharacterDetails(id)
+        characterWebservice?.getCharacterDetails(id, { character ->
+            character?.let{
+//                    val speciesId = getSpeciesId(it.)
+//                    characterWebservice?.getSpecies(character.id,{},{
+                val homeworldId = getHomeWorldId(it.homeworld)
+                characterWebservice?.getHomeworld(homeworldId,{homeworld ->
+                    character.homeworld = homeworld?.name ?: ""
+                },{})
+                characterDao?.updateCharacterDetails(character)
+            }
+        }, {
+
+        })
     }
 
 
 
+    private fun getSpeciesId(url: String) : Int{
+        val id = url.substringAfter("https://swapi.co/api/species/")
+        return id.toInt()
+    }
 
-
-
+    private fun getHomeWorldId(url: String) : Int{
+        val id = url.substringAfter("https://swapi.co/api/planets/")
+        return id.toInt()
+    }
 
     private fun characterWsToCharacter(page: Int, characterWS: CharacterWS) : Character{
         return Character().apply {

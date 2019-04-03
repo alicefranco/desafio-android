@@ -2,6 +2,8 @@ package br.pprojects.swapp.data.webservice
 
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.CharacterResponse
+import br.pprojects.swapp.models.Homeworld
+import br.pprojects.swapp.models.Species
 import kotlinx.coroutines.*
 
 class CharacterWebservice {
@@ -43,6 +45,38 @@ class CharacterWebservice {
     fun updateFavorite(id: Int, onSuccess: (Character?) -> Unit, onError: () -> Unit){
         GlobalScope.launch(Dispatchers.Main) {
             val request = characterRequestPopCode.updateFavoriteAsync(id)
+            try {
+                val response = request.await()
+                if (response.isSuccessful) {
+                    onSuccess(response.body())
+                } else {
+                    onError()
+                }
+            } catch (e: Throwable) {
+                onError()
+            }
+        }
+    }
+
+    fun getSpecies(id: Int, onSuccess: (Species?) -> Unit, onError: () -> Unit){
+        GlobalScope.launch(Dispatchers.Main) {
+            val request = characterRequestPopCode.getSpeciesDetailsAsync(id)
+            try {
+                val response = request.await()
+                if (response.isSuccessful) {
+                    onSuccess(response.body())
+                } else {
+                    onError()
+                }
+            } catch (e: Throwable) {
+                onError()
+            }
+        }
+    }
+
+    fun getHomeworld(id: Int, onSuccess: (Homeworld?) -> Unit, onError: () -> Unit){
+        GlobalScope.launch(Dispatchers.Main) {
+            val request = characterRequestPopCode.getHomeworldDetailsAsync(id)
             try {
                 val response = request.await()
                 if (response.isSuccessful) {
