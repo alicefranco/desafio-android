@@ -1,6 +1,7 @@
 package br.pprojects.swapp.ui.fragments
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,22 +10,22 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import br.pprojects.swapp.App
+import br.pprojects.swapp.*
 import br.pprojects.swapp.ui.adapters.LinearListAdapter
-import br.pprojects.swapp.R
-import br.pprojects.swapp.data.database.CharacterDao
-import br.pprojects.swapp.data.webservice.CharacterWebservice
+import br.pprojects.swapp.R.id.fl_details
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.CharacterWS
 import br.pprojects.swapp.repository.CharacterRepository
 import br.pprojects.swapp.ui.EndlessScrollListener
 import br.pprojects.swapp.viewmodels.CharactersViewModel
-import kotlinx.android.synthetic.main.planets_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.characters_fragment.*
 
 class CharactersFragment : Fragment() {
+    private lateinit var viewModel: CharactersViewModel
+    private var manager: LinearLayoutManager? = null
+    private var adapter: LinearListAdapter? = null
+    private var firstClick = true
+
     companion object {
         const val TAG = "CHARACTERS"
 
@@ -42,7 +43,7 @@ class CharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        var viewModel = ViewModelProviders.of(this).get(CharactersViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(CharactersViewModel::class.java)
 
         viewModel.firstCharacters.observe(this, Observer<List<Character>> {
             var characters = it ?: listOf()
@@ -61,6 +62,32 @@ class CharactersFragment : Fragment() {
                 }
             })
         })
+
+        fab_favorites.setOnClickListener{
+            viewModel.getAllFavorites().observe(this, Observer<List<Character>> {
+                adapter?.submitList(it)
+            })
+        }
     }
 
+
+    val itemClick: (id: Int) -> Unit = {
+        fl_details.visible()
+        val fragment = CharacterDetailsFragment.newInstance(it, closeFragment)
+        if(firstClick) {
+            addFragment(R.id.fl_details, fragment, CharacterDetailsFragment.TAG)
+            firstClick = false
+        }
+        else
+            replaceFragment(R.id.fl_details, fragment, CharacterDetailsFragment.TAG)
+    }
+
+    val itemClickFavorite: (id: Int, value: Boolean) -> Unit = { id, value ->
+        viewModel.updateFavorite(id, value)
+    }
+
+    val closeFragment: () -> Unit = {
+        fl_details.gone()
+        activity?.supportFragmentManager?.popBackStack()
+    }
 }

@@ -12,7 +12,8 @@ import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.R
 import kotlinx.android.synthetic.main.character_item.view.*
 
-class LinearListAdapter(var context: Context, var itemClick: () -> Unit) :
+class LinearListAdapter(var context: Context, var itemClick: (id: Int) -> Unit,
+                        var itemClickFavorite: (id: Int, value: Boolean) -> Unit) :
     ListAdapter<Character, LinearListAdapter.ViewHolder>(
         object: DiffUtil.ItemCallback<Character>(){
             override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean = oldItem.id == newItem.id
@@ -23,15 +24,15 @@ class LinearListAdapter(var context: Context, var itemClick: () -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.character_item, parent, false)
-        return ViewHolder(view, context, itemClick)
+        return ViewHolder(view, context, itemClick, itemClickFavorite)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, pos: Int) {
         holder.bind(getItem(pos))
     }
 
-    class ViewHolder(var item: View, var context: Context, var itemClick: () -> Unit ) : RecyclerView.ViewHolder(item)  {
-        private var isFavorite = false
+    class ViewHolder(var item: View, var context: Context, var itemClick: (id: Int) -> Unit,
+                     var itemClickFavorite: (id: Int, value: Boolean) -> Unit ) : RecyclerView.ViewHolder(item)  {
 
         fun bind(character: Character){
             item.tv_name.text = character.name
@@ -40,22 +41,26 @@ class LinearListAdapter(var context: Context, var itemClick: () -> Unit) :
 
             item.cl_character.setOnClickListener {
                 //todo fragment list click
-               itemClick()
+               itemClick(character.id ?: 0)
             }
 
             item.iv_favorite.setOnClickListener {
-                if (isFavorite) {
+                if (character.isFavorite) {
                     item.iv_favorite.setImageDrawable(context.getDrawable(R.drawable.ic_star_outline))
-                    isFavorite = false
+                    character.isFavorite = false
+                    itemClickFavorite(character.id ?: 0, false)
                 } else {
                     item.iv_favorite.setImageDrawable(context.getDrawable(R.drawable.ic_star_full))
-                    isFavorite = true
+                    character.isFavorite = true
+                    itemClickFavorite(character.id ?: 0, true)
                 }
             }
 
 
-            if(character.gender == "male") item.iv_gender.setImageDrawable(context.getDrawable(R.drawable.ic_male))
-            else if(character.gender == "female") item.iv_gender.setImageDrawable(context.getDrawable(R.drawable.ic_female))
+            if(character.gender == "male")
+                item.iv_gender.setImageDrawable(context.getDrawable(R.drawable.ic_male))
+            else if(character.gender == "female")
+                item.iv_gender.setImageDrawable(context.getDrawable(R.drawable.ic_female))
         }
     }
 }

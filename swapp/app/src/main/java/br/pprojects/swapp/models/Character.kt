@@ -18,6 +18,7 @@ data class CharacterResponse(@JsonProperty("count") var count: Int? = -1,
 data class Character(@PrimaryKey(autoGenerate = true)
                      var id: Int? = null,
                      var pageReference: Int? = null,
+                     var isFavorite: Boolean = false,
                      var name: String? = "",
                      var gender: String = "",
                      var height: String = "",

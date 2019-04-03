@@ -8,7 +8,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 
 object BaseRequest {
-    private const val BASE_URL = "https://swapi.co/"
+    private const val BASE_URL_SWAPI = "https://swapi.co/"
+    private const val BASE_URL_POPCODE = "http://private-782d3-starwarsfavorites.apiary-mock.com/"
 
     private val loggingInterceptor = HttpLoggingInterceptor()
         .setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -17,11 +18,19 @@ object BaseRequest {
         .addInterceptor(loggingInterceptor)
         .build()
 
-    val service = Retrofit
+    val serviceSwapi = Retrofit
         .Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(BASE_URL_SWAPI)
         .addConverterFactory(JacksonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(interceptor)
         .build()
+
+    val servicePopCode = Retrofit
+            .Builder()
+            .baseUrl(BASE_URL_POPCODE)
+            .addConverterFactory(JacksonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .client(interceptor)
+            .build()
 }
