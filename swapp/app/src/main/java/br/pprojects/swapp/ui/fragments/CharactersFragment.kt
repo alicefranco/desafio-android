@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.characters_fragment.*
 
 class CharactersFragment : Fragment() {
     private lateinit var viewModel: CharactersViewModel
-    private var manager: LinearLayoutManager? = null
     private var adapter: LinearListAdapter? = null
     private var firstClick = true
 
@@ -46,9 +45,9 @@ class CharactersFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(CharactersViewModel::class.java)
 
         viewModel.firstCharacters.observe(this, Observer<List<Character>> {
-            var characters = it ?: listOf()
-            var  manager = LinearLayoutManager(activity)
-            var adapter = LinearListAdapter(context!!, {})
+            val characters = it ?: listOf()
+            val  manager = LinearLayoutManager(activity)
+            adapter = LinearListAdapter(context!!, itemClick, itemClickFavorite)
             adapter?.submitList(characters)
             rv_characters.layoutManager = manager
             rv_characters.adapter = adapter
@@ -56,23 +55,26 @@ class CharactersFragment : Fragment() {
                 override fun loadMore() {
                     viewModel.getCharacters()
                     viewModel.characters.observe(this@CharactersFragment, Observer<List<Character>> { addedUsers ->
-                        adapter.submitList(addedUsers)
-                        adapter.notifyDataSetChanged()
+                        (adapter as LinearListAdapter).submitList(addedUsers)
+                        (adapter as LinearListAdapter).notifyDataSetChanged()
                     })
                 }
             })
         })
 
         fab_favorites.setOnClickListener{
-            viewModel.getAllFavorites().observe(this, Observer<List<Character>> {
-                adapter?.submitList(it)
-            })
+            viewModel.getAllFavorites()
         }
+
+        viewModel.favorites.observe(this, Observer<List<Character>> {
+            adapter?.submitList(it)
+        })
     }
 
 
     val itemClick: (id: Int) -> Unit = {
         fl_details.visible()
+        fab_favorites.gone()
         val fragment = CharacterDetailsFragment.newInstance(it, closeFragment)
         if(firstClick) {
             addFragment(R.id.fl_details, fragment, CharacterDetailsFragment.TAG)
@@ -82,12 +84,13 @@ class CharactersFragment : Fragment() {
             replaceFragment(R.id.fl_details, fragment, CharacterDetailsFragment.TAG)
     }
 
-    val itemClickFavorite: (id: Int, value: Boolean) -> Unit = { id, value ->
+    val itemClickFavorite: (id: Int, value: Int) -> Unit = { id, value ->
         viewModel.updateFavorite(id, value)
     }
 
     val closeFragment: () -> Unit = {
         fl_details.gone()
+        fab_favorites.visible()
         activity?.supportFragmentManager?.popBackStack()
     }
 }

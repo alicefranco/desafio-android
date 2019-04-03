@@ -45,8 +45,8 @@ class CharacterRepository {
         return characterDao?.getCharacterDetails(id)
     }
 
-    fun updateFavorite(id: Int, value: Boolean){
-        if(value) refreshFavorite(id)
+    fun updateFavorite(id: Int, value: Int){
+        if(value == 1) refreshFavorite(id)
         characterDao?.updateFavorite(id, value)
     }
 

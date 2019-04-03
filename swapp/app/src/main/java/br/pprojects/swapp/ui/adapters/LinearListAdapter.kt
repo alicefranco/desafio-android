@@ -1,6 +1,5 @@
 package br.pprojects.swapp.ui.adapters
 
-import android.app.AlertDialog
 import android.content.Context
 import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
@@ -13,7 +12,7 @@ import br.pprojects.swapp.R
 import kotlinx.android.synthetic.main.character_item.view.*
 
 class LinearListAdapter(var context: Context, var itemClick: (id: Int) -> Unit,
-                        var itemClickFavorite: (id: Int, value: Boolean) -> Unit) :
+                        var itemClickFavorite: (id: Int, value: Int) -> Unit) :
     ListAdapter<Character, LinearListAdapter.ViewHolder>(
         object: DiffUtil.ItemCallback<Character>(){
             override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean = oldItem.id == newItem.id
@@ -32,7 +31,7 @@ class LinearListAdapter(var context: Context, var itemClick: (id: Int) -> Unit,
     }
 
     class ViewHolder(var item: View, var context: Context, var itemClick: (id: Int) -> Unit,
-                     var itemClickFavorite: (id: Int, value: Boolean) -> Unit ) : RecyclerView.ViewHolder(item)  {
+                     var itemClickFavorite: (id: Int, value: Int) -> Unit ) : RecyclerView.ViewHolder(item)  {
 
         fun bind(character: Character){
             item.tv_name.text = character.name
@@ -44,15 +43,21 @@ class LinearListAdapter(var context: Context, var itemClick: (id: Int) -> Unit,
                itemClick(character.id ?: 0)
             }
 
+            if (character.favorited == 0) {
+                item.iv_favorite.setImageDrawable(context.getDrawable(R.drawable.ic_star_outline))
+            } else {
+                item.iv_favorite.setImageDrawable(context.getDrawable(R.drawable.ic_star_full))
+            }
+
             item.iv_favorite.setOnClickListener {
-                if (character.isFavorite) {
+                if (character.favorited == 1) {
                     item.iv_favorite.setImageDrawable(context.getDrawable(R.drawable.ic_star_outline))
-                    character.isFavorite = false
-                    itemClickFavorite(character.id ?: 0, false)
+                    character.favorited = 0
+                    itemClickFavorite(character.id ?: 0, 0)
                 } else {
                     item.iv_favorite.setImageDrawable(context.getDrawable(R.drawable.ic_star_full))
-                    character.isFavorite = true
-                    itemClickFavorite(character.id ?: 0, true)
+                    character.favorited = 1
+                    itemClickFavorite(character.id ?: 0, 1)
                 }
             }
 

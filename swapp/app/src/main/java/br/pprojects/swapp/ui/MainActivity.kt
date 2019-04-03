@@ -21,10 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         App.database = AppDatabase.getAppDataBase(this)
 
+        val fragmentTitles = listOf("Characters", "Species", "Planets")
         val fragments = listOf<Fragment>(CharactersFragment.newInstance(), SpeciesFragment.newInstance(), PlanetsFragment.newInstance())
 
         val viewPager = findViewById<ViewPager>(R.id.vp_main)
-        viewPager.adapter = ViewPagerAdapter(fragments, supportFragmentManager)
+        viewPager.adapter = ViewPagerAdapter(fragmentTitles, fragments, supportFragmentManager)
 
         val tabLayout = findViewById<TabLayout>(R.id.tl_main)
         tabLayout.setupWithViewPager(viewPager)

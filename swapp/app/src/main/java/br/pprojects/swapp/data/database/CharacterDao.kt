@@ -21,10 +21,10 @@ interface CharacterDao {
     @Query("SELECT * FROM character WHERE id == :id")
     fun getCharacterDetails(id: Int): LiveData<Character>
 
-    @Query("UPDATE character SET isFavorite = :value WHERE id == :id")
-    fun updateFavorite(id: Int, value: Boolean)
+    @Query("UPDATE character SET favorited = :value WHERE id == :id")
+    fun updateFavorite(id: Int, value: Int)
 
-    @Query( "SELECT * FROM character WHERE isFavorite == 'true'")
+    @Query("SELECT * FROM character WHERE favorited == 1")
     fun getAllFavorites() : LiveData<List<Character>>
 
 }

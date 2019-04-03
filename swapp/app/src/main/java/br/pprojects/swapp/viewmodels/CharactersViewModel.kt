@@ -16,6 +16,7 @@ class CharactersViewModel : ViewModel(){
 
     init{
         firstCharacters = MutableLiveData()
+        favorites = MutableLiveData()
         getCharacters()
     }
 
@@ -35,23 +36,14 @@ class CharactersViewModel : ViewModel(){
         }
     }
 
-    fun updateFavorite(id: Int, value: Boolean){
-        if(!::favorites.isInitialized){
-            favorites = MutableLiveData()
-        }
+    fun updateFavorite(id: Int, value: Int){
         characterRepository.updateFavorite(id, value)
     }
 
-    fun deleteFavorite(id: Int){}
-
-    fun getAllFavorites() : LiveData<List<Character>> {
-        if(!::favorites.isInitialized){
-            favorites = MutableLiveData()
-        }
+    fun getAllFavorites()  {
         characterRepository.getAllFavorites()?.let{
             favorites = it
         }
-        return favorites
     }
 
 

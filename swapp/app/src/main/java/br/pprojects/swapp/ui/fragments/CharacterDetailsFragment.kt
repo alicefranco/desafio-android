@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.character_details_fragment.*
 
 class CharacterDetailsFragment : Fragment() {
     private var id: Int? = null
-    private var isFavorite = false
     private var closeFragment: () -> Unit = {}
 
     companion object {
@@ -46,13 +45,21 @@ class CharacterDetailsFragment : Fragment() {
             tv_height.text = character?.height
             tv_mass.text = character?.mass
 
+            if (character?.favorited == 0) {
+                iv_favorite.setImageDrawable(context?.getDrawable(R.drawable.ic_star_outline))
+            } else {
+                iv_favorite.setImageDrawable(context?.getDrawable(R.drawable.ic_star_full))
+            }
+
             iv_favorite.setOnClickListener {
-                if (isFavorite) {
+                if (character?.favorited == 1) {
                     iv_favorite.setImageDrawable(context?.getDrawable(R.drawable.ic_star_outline))
-                    isFavorite = false
+                    character?.favorited = 0
+                    viewModel.updateFavorite(character?.id ?: 0, 0)
                 } else {
                     iv_favorite.setImageDrawable(context?.getDrawable(R.drawable.ic_star_full))
-                    isFavorite = true
+                    character?.favorited = 1
+                    viewModel.updateFavorite(character?.id ?: 0, 1)
                 }
             }
 

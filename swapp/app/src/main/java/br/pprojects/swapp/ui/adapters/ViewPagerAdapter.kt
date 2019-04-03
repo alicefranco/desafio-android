@@ -4,8 +4,10 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
-class ViewPagerAdapter(private var fragments: List<Fragment>, supportFragmentManager: FragmentManager) :
-    FragmentPagerAdapter(supportFragmentManager) {
+class ViewPagerAdapter(private var fragmentTitles: List<String>, private var fragments: List<Fragment>, supportFragmentManager: FragmentManager) :
+        FragmentPagerAdapter(supportFragmentManager) {
+
+
     override fun getItem(position: Int): Fragment {
         return fragments[position]
     }
@@ -14,8 +16,7 @@ class ViewPagerAdapter(private var fragments: List<Fragment>, supportFragmentMan
         return fragments.size
     }
 
-    //todo title tab
-//    override fun getPageTitle(position: Int): CharSequence? {
-//        return super.getPageTitle(position)
-//    }
+    override fun getPageTitle(position: Int): CharSequence? {
+        return fragmentTitles[position]
+    }
 }

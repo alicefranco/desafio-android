@@ -15,5 +15,5 @@ interface CharacterAPI{
 
 
     @POST("/favorite/{id}")
-    fun updateFavoriteAsync(@Field("id") id: Int) : Deferred<Response<Character>>
+    fun updateFavoriteAsync(@Path("id") id: Int) : Deferred<Response<Character>>
 }

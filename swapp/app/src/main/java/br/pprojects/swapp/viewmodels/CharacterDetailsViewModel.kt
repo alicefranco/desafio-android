@@ -15,4 +15,8 @@ class CharacterDetailsViewModel : ViewModel() {
             character = it
         }
     }
+
+    fun updateFavorite(id: Int, value: Int){
+        characterRepository.updateFavorite(id, value)
+    }
 }
