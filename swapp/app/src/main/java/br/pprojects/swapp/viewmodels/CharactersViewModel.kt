@@ -19,15 +19,20 @@ class CharactersViewModel : ViewModel(){
     }
 
     fun getCharacters() {
-        if(page == 1){
-           characterRepository.getCharacters(page)?.let{
-                firstCharacters = it
+        if(page <=87 ){
+            if (page == 1) {
+                characterRepository.getCharacters(page)?.let {
+                    firstCharacters = it
+                }
+                page++
+            } else {
+                if (!::characters.isInitialized)
+                    characters = MutableLiveData()
+                characters.value = characterRepository.getCharacters(page)?.value
+                page++
             }
-            page++
-        }
-        else{
-            characters.value = characterRepository.getCharacters(page)?.value
-            page++
         }
     }
+
+
 }
