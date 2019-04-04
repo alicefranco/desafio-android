@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import br.pprojects.swapp.R
 import br.pprojects.swapp.models.Character
+import br.pprojects.swapp.models.Planet
 import br.pprojects.swapp.viewmodels.CharacterDetailsViewModel
 import kotlinx.android.synthetic.main.character_details_fragment.*
 
@@ -37,6 +38,11 @@ class CharacterDetailsFragment : Fragment() {
 
         viewModel.getCharacterDetails(id ?: 0)
         viewModel.character.observe(this, Observer<Character>{ character ->
+            viewModel.getPlanet(character?.homeworld?.toInt() ?: 0)
+            viewModel.planet.observe(this, Observer<Planet>{ planet ->
+                tv_planet.text = planet?.name
+            })
+
             tv_name.text = character?.name
             tv_birth_year.text = character?.birthYear
             tv_eye_color.text = character?.eyeColor
@@ -44,6 +50,7 @@ class CharacterDetailsFragment : Fragment() {
             tv_skin_color.text = character?.skinColor
             tv_height.text = character?.height
             tv_mass.text = character?.mass
+
 
             if (character?.favorited == 0) {
                 iv_favorite.setImageDrawable(context?.getDrawable(R.drawable.ic_star_outline))
@@ -70,6 +77,8 @@ class CharacterDetailsFragment : Fragment() {
 
             tv_go_back.setOnClickListener{ closeFragment() }
         })
+
+
 
     }
 }

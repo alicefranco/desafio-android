@@ -6,9 +6,6 @@ import br.pprojects.swapp.data.database.CharacterDao
 import br.pprojects.swapp.data.webservice.CharacterWebservice
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.CharacterWS
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class CharacterRepository {
     private var characterWebservice: CharacterWebservice? = null
@@ -16,7 +13,7 @@ class CharacterRepository {
 
     init{
         characterWebservice = CharacterWebservice()
-        characterDao = App.database?.CharacterDao()
+        characterDao = App.database?.characterDao()
     }
 
     fun getCharacters(page: Int) : LiveData<List<Character>>?{
@@ -64,32 +61,27 @@ class CharacterRepository {
 
 
     private fun refreshCharacterDetails(id: Int){
-        val characterDetails = characterDao?.getCharacterDetails(id)
-        characterWebservice?.getCharacterDetails(id, { character ->
-            character?.let{
-//                    val speciesId = getSpeciesId(it.)
-//                    characterWebservice?.getSpecies(character.id,{},{
-                val homeworldId = getHomeWorldId(it.homeworld)
-                characterWebservice?.getHomeworld(homeworldId,{homeworld ->
-                    character.homeworld = homeworld?.name ?: ""
-                },{})
-                characterDao?.updateCharacterDetails(character)
+        characterDao?.getCharacterDetails(id)
+        characterWebservice?.getCharacterDetails(id, { it ->
+            var character = characterWsToCharacter(0, it ?: CharacterWS())
+            character.let{
+                it.id = id
+                characterDao?.updateCharacterDetails(it)
             }
         }, {
-
         })
     }
 
 
 
-    private fun getSpeciesId(url: String) : Int{
-        val id = url.substringAfter("https://swapi.co/api/species/")
-        return id.toInt()
+    private fun getSpeciesId(url: String?) : String{
+        val id = url?.substringAfter("https://swapi.co/api/species/")?.replace("/", "") ?: ""
+        return id
     }
 
-    private fun getHomeWorldId(url: String) : Int{
-        val id = url.substringAfter("https://swapi.co/api/planets/")
-        return id.toInt()
+    private fun getHomeWorldId(url: String?) : String {
+        val id = url?.substringAfter("https://swapi.co/api/planets/")?.replace("/", "") ?: ""
+        return id
     }
 
     private fun characterWsToCharacter(page: Int, characterWS: CharacterWS) : Character{
@@ -97,6 +89,7 @@ class CharacterRepository {
             this.pageReference = page
             this.name = characterWS.name
             //this.species = characterWS.species
+            characterWS.homeworld = getHomeWorldId(characterWS.homeworld)
             this.homeworld = characterWS.homeworld
             this.birthYear = characterWS.birthYear
             this.eyeColor = characterWS.eyeColor

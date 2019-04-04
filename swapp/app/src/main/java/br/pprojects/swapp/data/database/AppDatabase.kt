@@ -4,11 +4,13 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-import br.pprojects.swapp.models.Character
+import br.pprojects.swapp.models.*
 
-@Database(entities = [Character::class], version = 6)
+@Database(entities = [Character::class, Species::class, Planet::class], version = 8)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun CharacterDao() : CharacterDao
+    abstract fun characterDao() : CharacterDao
+    abstract fun planetDao() : PlanetDao
+    abstract fun speciesDao() : SpeciesDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null

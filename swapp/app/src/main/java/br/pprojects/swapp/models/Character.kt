@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.annotation.JsonRawValue
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,7 +32,8 @@ data class Character(@PrimaryKey(autoGenerate = true)
                      var homeworld: String = "")
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class CharacterWS(@JsonProperty("name") var name: String? = "",
+data class CharacterWS(@JsonProperty("id") var id: Int? = null,
+                     @JsonProperty("name") var name: String? = "",
                      @JsonProperty("gender") var gender: String = "",
                      @JsonProperty("height") var height: String = "",
                      @JsonProperty("mass") var mass: String = "",
@@ -40,5 +42,5 @@ data class CharacterWS(@JsonProperty("name") var name: String? = "",
                      @JsonProperty("eye_color") var eyeColor: String = "",
                      @JsonProperty("birth_year") var birthYear: String = "",
                      //@JsonProperty("species") var species: List<String>? = null,
-                     @JsonProperty("homeworld") var homeworld: String = "")
+                     @JsonRawValue @JsonProperty("homeworld") var homeworld: String = "")
 

@@ -10,7 +10,7 @@ class CharactersViewModel : ViewModel(){
     private var characterRepository = CharacterRepository()
     var firstCharacters: LiveData<List<Character>>
     lateinit var characters: MutableLiveData<List<Character>>
-    lateinit var favorites: LiveData<List<Character>>
+    var favorites: LiveData<List<Character>>
     private var page = 1
 
 
@@ -45,6 +45,8 @@ class CharactersViewModel : ViewModel(){
             favorites = it
         }
     }
+
+
 
 
 }
