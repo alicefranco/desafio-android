@@ -13,7 +13,7 @@ import br.pprojects.swapp.repository.SpeciesRepository
 class CharacterDetailsViewModel : ViewModel() {
     var character: LiveData<Character> = MutableLiveData()
     var planet: LiveData<Planet> = MutableLiveData()
-    var species: LiveData<Species> = MutableLiveData()
+    var species: LiveData<List<Species>> = MutableLiveData()
     private var characterRepository = CharacterRepository()
     private var planetRepository = PlanetRepository()
     private var speciesRepository = SpeciesRepository()
@@ -36,9 +36,9 @@ class CharacterDetailsViewModel : ViewModel() {
         }
     }
 
-    fun getSpecies(id: Int){
-        speciesRepository.getSpeciesDetails(id)?.let{
-          //  species = it
+    fun getSpecies(ids: List<String>?){
+        speciesRepository.getSpeciesDetails(ids)?.let{
+            species = it
         }
     }
 }

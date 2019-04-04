@@ -6,6 +6,7 @@ import br.pprojects.swapp.data.database.CharacterDao
 import br.pprojects.swapp.data.webservice.CharacterWebservice
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.CharacterWS
+import com.fasterxml.jackson.databind.ObjectMapper
 
 class CharacterRepository {
     private var characterWebservice: CharacterWebservice? = null
@@ -88,9 +89,6 @@ class CharacterRepository {
         return Character().apply {
             this.pageReference = page
             this.name = characterWS.name
-            //this.species = characterWS.species
-            characterWS.homeworld = getHomeWorldId(characterWS.homeworld)
-            this.homeworld = characterWS.homeworld
             this.birthYear = characterWS.birthYear
             this.eyeColor = characterWS.eyeColor
             this.hairColor = characterWS.hairColor
@@ -98,6 +96,13 @@ class CharacterRepository {
             this.mass = characterWS.mass
             this.height = characterWS.height
             this.gender = characterWS.gender
+
+            characterWS.homeworld = getHomeWorldId(characterWS.homeworld)
+            this.homeworld = characterWS.homeworld
+
+            var speciesIds = arrayListOf<String>()
+            characterWS.species?.forEach { speciesIds.add(getSpeciesId(it))}
+            this.species = speciesIds
         }
     }
 }

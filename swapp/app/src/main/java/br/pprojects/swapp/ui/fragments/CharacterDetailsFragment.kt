@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import br.pprojects.swapp.R
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.Planet
+import br.pprojects.swapp.models.Species
 import br.pprojects.swapp.viewmodels.CharacterDetailsViewModel
 import kotlinx.android.synthetic.main.character_details_fragment.*
 
@@ -41,6 +42,11 @@ class CharacterDetailsFragment : Fragment() {
             viewModel.getPlanet(character?.homeworld?.toInt() ?: 0)
             viewModel.planet.observe(this, Observer<Planet>{ planet ->
                 tv_planet.text = planet?.name
+            })
+
+            viewModel.getSpecies(character?.species)
+            viewModel.species.observe(this, Observer<List<Species>>{ species ->
+                //tv_species.text = species?.
             })
 
             tv_name.text = character?.name

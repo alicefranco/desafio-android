@@ -12,7 +12,7 @@ interface SpeciesDao {
     fun getAllSpecies(): LiveData<List<Species>>
 
     @Query("SELECT * FROM species WHERE id == :id")
-    fun getSpeciesDetails(id: Int): LiveData<Species>
+    fun getSpeciesDetails(ids: List<String>): LiveData<List<Species>>
 
     @Insert
     fun insertSpecies(species: Species)

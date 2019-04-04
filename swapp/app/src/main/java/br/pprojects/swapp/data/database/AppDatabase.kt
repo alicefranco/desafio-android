@@ -1,12 +1,11 @@
 package br.pprojects.swapp.data.database
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.*
 import android.content.Context
 import br.pprojects.swapp.models.*
 
-@Database(entities = [Character::class, Species::class, Planet::class], version = 8)
+@Database(entities = [Character::class, Species::class, Planet::class], version = 11)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun characterDao() : CharacterDao
     abstract fun planetDao() : PlanetDao
