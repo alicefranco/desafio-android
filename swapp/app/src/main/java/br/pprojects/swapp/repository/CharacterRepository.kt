@@ -75,9 +75,9 @@ class CharacterRepository {
 
 
 
-    private fun getSpeciesId(url: String?) : Int{
+    private fun getSpeciesId(url: String?) : String{
         val id = url?.substringAfter("https://swapi.co/api/species/")?.replace("/", "") ?: ""
-        return id.toInt()
+        return id
     }
 
     private fun getHomeWorldId(url: String?) : String {
@@ -96,11 +96,9 @@ class CharacterRepository {
             this.mass = characterWS.mass
             this.height = characterWS.height
             this.gender = characterWS.gender
+            this.homeworld = getHomeWorldId(characterWS.homeworld)
 
-            characterWS.homeworld = getHomeWorldId(characterWS.homeworld)
-            this.homeworld = characterWS.homeworld
-
-            var speciesIds = arrayListOf<Int>()
+            var speciesIds = arrayListOf<String>()
             characterWS.species?.forEach { speciesIds.add(getSpeciesId(it))}
             this.species = speciesIds
         }

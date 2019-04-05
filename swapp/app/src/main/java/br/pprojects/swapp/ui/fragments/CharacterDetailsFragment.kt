@@ -44,16 +44,16 @@ class CharacterDetailsFragment : Fragment() {
                 tv_planet.text = planet?.name
             })
 
-//            viewModel.getSpecies(character?.species)
-//            viewModel.species.observe(this, Observer<List<Species>>{ species ->
+            viewModel.getSpecies(character?.species)
+            viewModel.species.observe(this, Observer<Species>{ species ->
 //                var speciesText = ""
 //                var i = 0
 //                while(i < species?.size ?: 0){
 //                    speciesText = species?.get(i).toString() + "\n" + speciesText
 //                    i++
 //                }
-//                tv_species.text = speciesText
-//            })
+                tv_species.text = species?.name
+            })
 
             tv_name.text = character?.name
             tv_birth_year.text = character?.birthYear

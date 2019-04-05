@@ -12,7 +12,7 @@ interface CharacterDao {
     @Query("SELECT * FROM character WHERE pageReference == :page")
     fun getCharactersByPage(page: Int): List<Character>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacters(characters: List<Character>)
 
     @Query("SELECT * FROM character WHERE id == :id")

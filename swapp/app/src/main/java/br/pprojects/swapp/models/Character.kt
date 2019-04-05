@@ -32,7 +32,7 @@ data class Character(@PrimaryKey(autoGenerate = true)
                      var eyeColor: String = "",
                      var birthYear: String = "",
                      @TypeConverters(Converters::class)
-                     var species: List<Int>? = null,
+                     var species: List<String>? = null,
                      var homeworld: String = "")
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -46,5 +46,5 @@ data class CharacterWS(@JsonProperty("id") var id: Int? = null,
                      @JsonProperty("eye_color") var eyeColor: String = "",
                      @JsonProperty("birth_year") var birthYear: String = "",
                      @JsonProperty("species") var species: List<String>? = null,
-                     @JsonRawValue @JsonProperty("homeworld") var homeworld: String = "")
+                     @JsonProperty("homeworld") var homeworld: String = "")
 

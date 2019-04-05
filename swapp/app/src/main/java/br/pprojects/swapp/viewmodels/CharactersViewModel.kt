@@ -54,8 +54,4 @@ class CharactersViewModel : ViewModel(){
         }
         return favorites
     }
-
-
-
-
 }

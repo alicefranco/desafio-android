@@ -11,9 +11,9 @@ import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.R
 import kotlinx.android.synthetic.main.character_item.view.*
 
-class LinearListAdapter(var context: Context, var itemClick: (id: Int) -> Unit,
-                        var itemClickFavorite: (id: Int, value: Int) -> Unit) :
-    ListAdapter<Character, LinearListAdapter.ViewHolder>(
+class CharacterListAdapter(var context: Context, var itemClick: (id: Int) -> Unit,
+                           var itemClickFavorite: (id: Int, value: Int) -> Unit) :
+    ListAdapter<Character, CharacterListAdapter.ViewHolder>(
         object: DiffUtil.ItemCallback<Character>(){
             override fun areItemsTheSame(oldItem: Character, newItem: Character): Boolean = oldItem.id == newItem.id
 

@@ -12,31 +12,46 @@
             android:scrollbars="vertical"
             android:scrollbarFadeDuration="100000"
             app:layout_constraintTop_toBottomOf="@+id/et_search"/>
+
     <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/et_search"
-            android:background="@color/white"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/iv_do_search"
-            app:layout_constraintEnd_toStartOf="@+id/iv_clear_search" android:padding="8dp"
-            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:hint="Name"/>
+        android:id="@+id/et_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/iv_clear_search"
+        app:layout_constraintStart_toEndOf="@+id/iv_do_search"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp" app:srcCompat="@drawable/ic_search"
-            android:id="@+id/iv_do_search"
-            app:layout_constraintTop_toTopOf="@+id/et_search" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/et_search" android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+        android:id="@+id/iv_do_search"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_search"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_search"
+        app:srcCompat="@drawable/ic_search" />
+
     <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp" app:srcCompat="@drawable/ic_close"
-            android:id="@+id/iv_clear_search"
-            app:layout_constraintTop_toTopOf="@+id/et_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_search"/>
+        android:id="@+id/iv_clear_search"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_search"
+        app:srcCompat="@drawable/ic_close" />
 
     <FrameLayout
         android:id="@+id/fl_details"

@@ -1,30 +1,25 @@
 package br.pprojects.swapp.ui.fragments
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.pprojects.swapp.*
 import br.pprojects.swapp.R.drawable.*
-import br.pprojects.swapp.ui.adapters.LinearListAdapter
-import br.pprojects.swapp.R.id.fl_details
+import br.pprojects.swapp.ui.adapters.CharacterListAdapter
 import br.pprojects.swapp.models.Character
-import br.pprojects.swapp.models.CharacterWS
-import br.pprojects.swapp.repository.CharacterRepository
 import br.pprojects.swapp.ui.EndlessScrollListener
 import br.pprojects.swapp.viewmodels.CharactersViewModel
 import kotlinx.android.synthetic.main.characters_fragment.*
 
 class CharactersFragment : Fragment() {
     private lateinit var viewModel: CharactersViewModel
-    private var adapter: LinearListAdapter? = null
+    private var adapter: CharacterListAdapter? = null
     private var firstClick = true
 
 
@@ -45,7 +40,7 @@ class CharactersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val  manager = LinearLayoutManager(activity)
-        adapter = LinearListAdapter(context!!, itemClick, itemClickFavorite)
+        adapter = CharacterListAdapter(context!!, itemClick, itemClickFavorite)
         rv_characters.layoutManager = manager
         rv_characters.adapter = adapter
         rv_characters.addOnScrollListener(object : EndlessScrollListener(manager){
@@ -53,8 +48,8 @@ class CharactersFragment : Fragment() {
                 if(viewModel.isFavoriteList == false) {
                     viewModel.getCharacters()
                     viewModel.characters.observe(this@CharactersFragment, Observer<List<Character>> { addedUsers ->
-                        (adapter as LinearListAdapter).submitList(addedUsers)
-                        (adapter as LinearListAdapter).notifyDataSetChanged()
+                        (adapter as CharacterListAdapter).submitList(addedUsers)
+                        (adapter as CharacterListAdapter).notifyDataSetChanged()
                     })
                 }
             }

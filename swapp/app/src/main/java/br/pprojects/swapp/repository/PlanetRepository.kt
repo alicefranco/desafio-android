@@ -2,7 +2,6 @@ package br.pprojects.swapp.repository
 
 import android.arch.lifecycle.LiveData
 import br.pprojects.swapp.App
-import br.pprojects.swapp.data.database.CharacterDao
 import br.pprojects.swapp.data.database.PlanetDao
 import br.pprojects.swapp.data.webservice.PlanetWebservice
 import br.pprojects.swapp.models.Planet
@@ -17,6 +16,28 @@ class PlanetRepository{
         planetDao = App.database?.planetDao()
     }
 
+    fun getPlanets(page: Int) : LiveData<List<Planet>>?{
+        refreshPlanets(page)
+        return planetDao?.getAllPlanets()
+    }
+
+    private fun refreshPlanets(page: Int){
+        val planetsByPage = planetDao?.getPlanetsByPage(page)
+        if (planetsByPage.isNullOrEmpty())
+            planetWebservice?.getPlanets(page, { response ->
+                response?.results?.let { results ->
+                    var resultsDb = arrayListOf<Planet>()
+                    results.forEach {
+                        resultsDb.add(planetWStoPlanet2(page, it))
+                    }
+                    planetDao?.insertPlanets(resultsDb.toList())
+                }
+            }, {
+                //todo on error
+            })
+    }
+
+
     fun getPlanetDetails(id: Int) : LiveData<Planet>? {
         refreshPlanetDetails(id)
         return planetDao?.getPlanetDetails(id)
@@ -26,9 +47,16 @@ class PlanetRepository{
         planetWebservice?.getPlanet(id, { planetws ->
             planetws?.let{
                 val planet = planetWStoPlanet(id, it)
-                planetDao?.insert(planet)
+                planetDao?.insertPlanet(planet)
             }
         },{})
+    }
+
+    private fun planetWStoPlanet2(page: Int, planetWS: PlanetWS) : Planet{
+        return Planet().apply {
+            this.pageReference = page
+            this.name = planetWS.name
+        }
     }
 
     private fun planetWStoPlanet(id: Int, planetWS: PlanetWS) : Planet{

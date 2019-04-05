@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @Entity
-data class Species(@PrimaryKey(autoGenerate = true)
+data class Species(@PrimaryKey
                    var id: Int? = null,
                    var name: String? = null)
 //                   var classification: String,
