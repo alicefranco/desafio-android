@@ -12,6 +12,7 @@ class CharactersViewModel : ViewModel(){
     lateinit var characters: MutableLiveData<List<Character>>
     var favorites: LiveData<List<Character>>
     private var page = 1
+    var isFavoriteList = false
 
 
     init{
@@ -40,10 +41,18 @@ class CharactersViewModel : ViewModel(){
         characterRepository.updateFavorite(id, value)
     }
 
-    fun getAllFavorites()  {
-        characterRepository.getAllFavorites()?.let{
-            favorites = it
+    fun showFavorites() : LiveData<List<Character>>  {
+        if(isFavoriteList) {
+            characterRepository.getAllFavorites()?.let {
+                favorites = it
+            }
         }
+        else{
+            characterRepository.getCharacters(page)?.let{
+                favorites = it
+            }
+        }
+        return favorites
     }
 
 
