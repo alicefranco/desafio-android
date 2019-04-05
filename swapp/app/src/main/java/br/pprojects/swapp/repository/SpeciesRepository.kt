@@ -17,14 +17,12 @@ class SpeciesRepository {
         speciesDao = App.database?.speciesDao()
     }
 
-    fun getSpeciesDetails(ids: List<String>?) : LiveData<List<Species>>? {
-        ids?.forEach {
-            refreshSpeciesDetails(it)
-        }
-        return speciesDao?.getSpeciesDetails(ids!!)
+    fun getSpeciesDetails(id: Int) : LiveData<Species>? {
+        refreshSpeciesDetails(id)
+        return speciesDao?.getSpeciesDetails(id)
     }
 
-    private fun refreshSpeciesDetails(id: String) {
+    private fun refreshSpeciesDetails(id: Int) {
         speciesWebservice?.getSpecies(id, { speciesws ->
             speciesws?.let {
                 val species = speciesWStoSpecies(id, it)
@@ -33,7 +31,7 @@ class SpeciesRepository {
         }, {})
     }
 
-    fun speciesWStoSpecies(id: String, species: SpeciesWS) : Species {
+    fun speciesWStoSpecies(id: Int, species: SpeciesWS) : Species {
         return Species().apply{
             this.id = id
             this.name = species.name

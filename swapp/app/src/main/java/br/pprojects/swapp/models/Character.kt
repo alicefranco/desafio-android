@@ -2,6 +2,9 @@ package br.pprojects.swapp.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverter
+import android.arch.persistence.room.TypeConverters
+import br.pprojects.swapp.data.database.Converters
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonRawValue
@@ -28,7 +31,8 @@ data class Character(@PrimaryKey(autoGenerate = true)
                      var skinColor: String = "",
                      var eyeColor: String = "",
                      var birthYear: String = "",
-                     var species: List<String>? = null,
+                     @TypeConverters(Converters::class)
+                     var species: List<Int>? = null,
                      var homeworld: String = "")
 
 @JsonIgnoreProperties(ignoreUnknown = true)
