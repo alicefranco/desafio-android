@@ -39,10 +39,10 @@ class PlanetsListAdapter(var context: Context, var itemClick: (id: Int) -> Unit)
             item.tv_water_value.text = planet.surfaceWater
             item.tv_gravity_value.text = planet.gravity
 
-            item.cl_character.setOnClickListener {
-                //todo fragment list click
-                itemClick(planet.id ?: 0)
-            }
+//            item.cl_planet.setOnClickListener {
+//                //todo fragment list click
+//                itemClick(planet.id ?: 0)
+//            }
         }
     }
 }

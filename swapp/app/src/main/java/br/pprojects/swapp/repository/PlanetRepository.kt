@@ -28,7 +28,7 @@ class PlanetRepository{
                 response?.results?.let { results ->
                     var resultsDb = arrayListOf<Planet>()
                     results.forEach {
-                        resultsDb.add(planetWStoPlanet2(page, it))
+                        resultsDb.add(planetWStoPlanetWithPage(page, it))
                     }
                     planetDao?.insertPlanets(resultsDb.toList())
                 }
@@ -52,17 +52,6 @@ class PlanetRepository{
         },{})
     }
 
-    private fun planetWStoPlanet2(page: Int, planetWS: PlanetWS) : Planet{
-        return Planet().apply {
-            this.pageReference = page
-            this.name = planetWS.name
-            this.climate = planetWS.climate
-            this.gravity = planetWS.gravity
-            this.population = planetWS.population
-            this.terrain = planetWS.terrain
-            this.surfaceWater = planetWS.surfaceWater.toString()
-        }
-    }
 
     private fun planetWStoPlanet(id: Int, planetWS: PlanetWS) : Planet{
         return Planet().apply {
@@ -73,6 +62,18 @@ class PlanetRepository{
             this.population = planetWS.population
             this.terrain = planetWS.terrain
             this.surfaceWater = planetWS.surfaceWater
+        }
+    }
+
+    private fun planetWStoPlanetWithPage(page: Int, planetWS: PlanetWS) : Planet{
+        return Planet().apply {
+            this.pageReference = page
+            this.name = planetWS.name
+            this.climate = planetWS.climate
+            this.gravity = planetWS.gravity
+            this.population = planetWS.population
+            this.terrain = planetWS.terrain
+            this.surfaceWater = planetWS.surfaceWater.toString()
         }
     }
 

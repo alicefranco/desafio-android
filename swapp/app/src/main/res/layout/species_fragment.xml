@@ -8,7 +8,7 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/rv_characters"
+            android:id="@+id/rv_species"
             app:layout_constraintTop_toBottomOf="@+id/et_search"/>
     <EditText
             android:layout_width="0dp"
@@ -19,14 +19,15 @@
             android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@+id/iv_do_search"
             app:layout_constraintEnd_toStartOf="@+id/iv_clear_search" android:padding="8dp"
-            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:hint="Species"/>
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp" android:hint="Species"
+            android:visibility="gone"/>
     <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp" app:srcCompat="@drawable/ic_search"
             android:id="@+id/iv_do_search"
             app:layout_constraintTop_toTopOf="@+id/et_search" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/et_search" android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp" android:visibility="gone"/>
     <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp" app:srcCompat="@drawable/ic_close"
@@ -34,5 +35,5 @@
             app:layout_constraintTop_toTopOf="@+id/et_search"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_search"/>
+            app:layout_constraintBottom_toBottomOf="@+id/et_search" android:visibility="gone"/>
 </android.support.constraint.ConstraintLayout>

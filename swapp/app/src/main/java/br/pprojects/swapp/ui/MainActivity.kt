@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         App.database = AppDatabase.getAppDataBase(this)
 
-        val fragmentTitles = listOf("Characters", "Planets")
-        val fragments = listOf<Fragment>(CharactersFragment.newInstance(), PlanetsFragment.newInstance())
+        val fragmentTitles = listOf(CharactersFragment.TAG, PlanetsFragment.TAG, SpeciesFragment.TAG)
+        val fragments = listOf<Fragment>(CharactersFragment.newInstance(), PlanetsFragment.newInstance(), SpeciesFragment.newInstance())
 
         val viewPager = findViewById<ViewPager>(R.id.vp_main)
         viewPager.adapter = ViewPagerAdapter(fragmentTitles, fragments, supportFragmentManager)
