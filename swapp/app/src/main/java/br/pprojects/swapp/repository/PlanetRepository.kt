@@ -56,6 +56,11 @@ class PlanetRepository{
         return Planet().apply {
             this.pageReference = page
             this.name = planetWS.name
+            this.climate = planetWS.climate
+            this.gravity = planetWS.gravity
+            this.population = planetWS.population
+            this.terrain = planetWS.terrain
+            this.surfaceWater = planetWS.surfaceWater.toString()
         }
     }
 
@@ -63,6 +68,11 @@ class PlanetRepository{
         return Planet().apply {
             this.id = id
             this.name = planetWS.name
+            this.climate = planetWS.climate
+            this.gravity = planetWS.gravity
+            this.population = planetWS.population
+            this.terrain = planetWS.terrain
+            this.surfaceWater = planetWS.surfaceWater
         }
     }
 

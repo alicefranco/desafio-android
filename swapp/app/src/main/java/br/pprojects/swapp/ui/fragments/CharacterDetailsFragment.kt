@@ -8,10 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.pprojects.swapp.R
+import br.pprojects.swapp.gone
+import br.pprojects.swapp.invisible
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.Planet
 import br.pprojects.swapp.models.Species
 import br.pprojects.swapp.viewmodels.CharacterDetailsViewModel
+import br.pprojects.swapp.visible
 import kotlinx.android.synthetic.main.character_details_fragment.*
 
 class CharacterDetailsFragment : Fragment() {
@@ -35,13 +38,19 @@ class CharacterDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        cl_character.setOnClickListener { }
+
         val viewModel = ViewModelProviders.of(this).get(CharacterDetailsViewModel::class.java)
+
+        hideHomeworld()
+        hideSpecies()
 
         viewModel.getCharacterDetails(id ?: 0)
         viewModel.character.observe(this, Observer<Character>{ character ->
             viewModel.getPlanet(character?.homeworld?.toInt() ?: 0)
             viewModel.planet.observe(this, Observer<Planet>{ planet ->
                 tv_planet.text = planet?.name
+                showPlanet()
             })
 
             viewModel.getSpecies(character?.species)
@@ -53,6 +62,7 @@ class CharacterDetailsFragment : Fragment() {
 //                    i++
 //                }
                 tv_species.text = species?.name
+                showSpecies()
             })
 
             tv_name.text = character?.name
@@ -92,5 +102,25 @@ class CharacterDetailsFragment : Fragment() {
 
 
 
+    }
+
+    fun showSpecies(){
+        tv_species.visible()
+        pb_species.gone()
+    }
+
+    fun showPlanet(){
+        tv_planet.visible()
+        pb_planet.gone()
+    }
+
+    fun hideSpecies(){
+        tv_species.invisible()
+        pb_species.visible()
+    }
+
+    fun hideHomeworld(){
+        tv_planet.invisible()
+        pb_planet.visible()
     }
 }

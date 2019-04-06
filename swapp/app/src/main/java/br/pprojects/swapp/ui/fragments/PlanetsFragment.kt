@@ -38,7 +38,7 @@ class PlanetsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val  manager = LinearLayoutManager(activity)
-        adapter = PlanetsListAdapter(context!!, {}, {_,_ ->})
+        adapter = PlanetsListAdapter(context!!, {})
         rv_planets.layoutManager = manager
         rv_planets.adapter = adapter
         rv_planets.addOnScrollListener(object : EndlessScrollListener(manager){
@@ -56,11 +56,6 @@ class PlanetsFragment : Fragment() {
             val planets = it ?: listOf()
             adapter?.submitList(planets)
         })
-
-
-
-
-
     }
 
 
@@ -75,14 +70,5 @@ class PlanetsFragment : Fragment() {
 //        else
 //            replaceFragment(R.id.fl_details, fragment, CharacterDetailsFragment.TAG)
 //    }
-//
-//    val itemClickFavorite: (id: Int, value: Int) -> Unit = { id, value ->
-//        viewModel.updateFavorite(id, value)
-//    }
-//
-//    val closeFragment: () -> Unit = {
-//        fl_details.gone()
-//        fab_favorites.visible()
-//        activity?.supportFragmentManager?.popBackStack()
-//    }
+
 }
