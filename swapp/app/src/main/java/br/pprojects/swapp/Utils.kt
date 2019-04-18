@@ -1,9 +1,9 @@
 package br.pprojects.swapp
 
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.View
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
 fun AppCompatActivity?.addFragment(@IdRes id: Int, fragment: Fragment, tag: String){
     this?.supportFragmentManager?.beginTransaction()?.add(id, fragment, tag)?.addToBackStack(tag)?.commit()

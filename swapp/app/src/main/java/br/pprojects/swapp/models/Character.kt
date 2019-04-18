@@ -1,13 +1,11 @@
 package br.pprojects.swapp.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverter
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import br.pprojects.swapp.data.database.Converters
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonRawValue
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -1,11 +1,9 @@
 package br.pprojects.swapp.viewmodels
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import br.pprojects.swapp.models.Character
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import br.pprojects.swapp.models.Planet
-import br.pprojects.swapp.repository.CharacterRepository
 import br.pprojects.swapp.repository.PlanetRepository
 
 class PlanetsViewModel : ViewModel(){

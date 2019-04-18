@@ -1,10 +1,10 @@
 package br.pprojects.swapp.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.Fragment
-import android.support.v4.view.ViewPager
+import android.widget.TabWidget
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import br.pprojects.swapp.App
 import br.pprojects.swapp.R
 import br.pprojects.swapp.data.database.AppDatabase
@@ -12,6 +12,7 @@ import br.pprojects.swapp.ui.adapters.ViewPagerAdapter
 import br.pprojects.swapp.ui.fragments.CharactersFragment
 import br.pprojects.swapp.ui.fragments.PlanetsFragment
 import br.pprojects.swapp.ui.fragments.SpeciesFragment
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 

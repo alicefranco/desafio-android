@@ -1,6 +1,6 @@
 package br.pprojects.swapp.data.database
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 

@@ -1,7 +1,8 @@
 package br.pprojects.swapp.repository
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import br.pprojects.swapp.App
+import br.pprojects.swapp.data.database.PlanetDBService
 import br.pprojects.swapp.data.database.PlanetDao
 import br.pprojects.swapp.data.webservice.PlanetWebservice
 import br.pprojects.swapp.models.Planet
@@ -23,14 +24,14 @@ class PlanetRepository{
 
     private fun refreshPlanets(page: Int){
         val planetsByPage = planetDao?.getPlanetsByPage(page)
-        if (planetsByPage.isNullOrEmpty())
+        if (planetsByPage?.value.isNullOrEmpty())
             planetWebservice?.getPlanets(page, { response ->
                 response?.results?.let { results ->
                     var resultsDb = arrayListOf<Planet>()
                     results.forEach {
                         resultsDb.add(planetWStoPlanetWithPage(page, it))
                     }
-                    planetDao?.insertPlanets(resultsDb.toList())
+                    PlanetDBService().insertPlanets(resultsDb.toList())
                 }
             }, {
                 //todo on error
@@ -47,7 +48,7 @@ class PlanetRepository{
         planetWebservice?.getPlanet(id, { planetws ->
             planetws?.let{
                 val planet = planetWStoPlanet(id, it)
-                planetDao?.insertPlanet(planet)
+                PlanetDBService().insertPlanet(planet)
             }
         },{})
     }

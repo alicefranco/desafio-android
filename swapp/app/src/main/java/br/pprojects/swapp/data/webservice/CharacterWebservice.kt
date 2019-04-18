@@ -1,7 +1,11 @@
 package br.pprojects.swapp.data.webservice
 
-import br.pprojects.swapp.models.*
-import kotlinx.coroutines.*
+import br.pprojects.swapp.models.Character
+import br.pprojects.swapp.models.CharacterResponse
+import br.pprojects.swapp.models.CharacterWS
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class CharacterWebservice {
     private val characterRequestSwapi = BaseRequest.serviceSwapi.create(CharacterAPI::class.java)

@@ -1,12 +1,12 @@
 package br.pprojects.swapp.repository
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import br.pprojects.swapp.App
+import br.pprojects.swapp.data.database.CharacterDBService
 import br.pprojects.swapp.data.database.CharacterDao
 import br.pprojects.swapp.data.webservice.CharacterWebservice
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.models.CharacterWS
-import com.fasterxml.jackson.databind.ObjectMapper
 
 class CharacterRepository {
     private var characterWebservice: CharacterWebservice? = null
@@ -24,14 +24,14 @@ class CharacterRepository {
 
     private fun refreshCharacters(page: Int){
         val charactersByPage = characterDao?.getCharactersByPage(page)
-        if (charactersByPage.isNullOrEmpty())
+        if (charactersByPage?.value.isNullOrEmpty())
             characterWebservice?.getCharacters(page, { response ->
                 response?.results?.let { results ->
                     var resultsDb = arrayListOf<Character>()
                     results.forEach {
                         resultsDb.add(characterWsToCharacter(page, it))
                     }
-                    characterDao?.insertCharacters(resultsDb.toList())
+                    CharacterDBService().insertCharacters(resultsDb.toList())
                 }
             }, {
                 //todo on error
@@ -45,7 +45,7 @@ class CharacterRepository {
 
     fun updateFavorite(id: Int, value: Int){
         if(value == 1) refreshFavorite(id)
-        characterDao?.updateFavorite(id, value)
+        CharacterDBService().updateFavorite(id, value)
     }
 
     fun refreshFavorite(id: Int){
@@ -67,7 +67,7 @@ class CharacterRepository {
             var character = characterWsToCharacter(0, it ?: CharacterWS())
             character.let{
                 it.id = id
-                characterDao?.updateCharacterDetails(it)
+                CharacterDBService().updateCharacterDetails(it)
             }
         }, {
         })

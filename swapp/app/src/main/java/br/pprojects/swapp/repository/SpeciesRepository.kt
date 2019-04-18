@@ -1,7 +1,8 @@
 package br.pprojects.swapp.repository
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import br.pprojects.swapp.App
+import br.pprojects.swapp.data.database.SpeciesDBService
 import br.pprojects.swapp.data.database.SpeciesDao
 import br.pprojects.swapp.data.webservice.SpeciesWebservice
 import br.pprojects.swapp.models.Species
@@ -24,14 +25,14 @@ class SpeciesRepository {
 
     private fun refreshSpecies(page: Int){
         val speciesByPage = speciesDao?.getSpeciesByPage(page)
-        if (speciesByPage.isNullOrEmpty())
+        if (speciesByPage?.value.isNullOrEmpty())
             speciesWebservice?.getSpecies(page, { response ->
                 response?.results?.let { results ->
                     var resultsDb = arrayListOf<Species>()
                     results.forEach {
                         resultsDb.add(speciesWStoSpeciesWithPage(page, it))
                     }
-                    speciesDao?.insertSpeciesList(resultsDb.toList())
+                    SpeciesDBService().insertSpeciesList(resultsDb.toList())
                 }
             }, {
                 //todo on error
@@ -47,7 +48,7 @@ class SpeciesRepository {
         speciesWebservice?.getSpeciesDetails(id, { speciesws ->
             speciesws?.let {
                 val species = speciesWStoSpecies(id, it)
-                speciesDao?.insertSpecies(species)
+                SpeciesDBService().insertSpecies(species)
             }
         }, {})
     }

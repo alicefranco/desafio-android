@@ -1,11 +1,9 @@
 package br.pprojects.swapp.ui
 
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.widget.AbsListView
-import android.widget.GridLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class EndlessScrollListener(private var layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
     private var isScrolling = false

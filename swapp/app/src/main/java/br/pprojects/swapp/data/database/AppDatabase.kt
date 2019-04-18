@@ -1,8 +1,13 @@
 package br.pprojects.swapp.data.database
 
-import android.arch.persistence.room.*
 import android.content.Context
-import br.pprojects.swapp.models.*
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import br.pprojects.swapp.models.Character
+import br.pprojects.swapp.models.Planet
+import br.pprojects.swapp.models.Species
 
 @Database(entities = [Character::class, Species::class, Planet::class], version = 17)
 @TypeConverters(Converters::class)
@@ -18,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
             if (INSTANCE == null){
                 synchronized(AppDatabase::class){
                     INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "AppDatabase")
-                        .allowMainThreadQueries()
+                        //.allowMainThreadQueries()
                         .fallbackToDestructiveMigration()
                         .build()
                 }

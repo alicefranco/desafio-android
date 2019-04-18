@@ -1,7 +1,5 @@
 package br.pprojects.swapp.data.webservice
 
-import br.pprojects.swapp.models.PlanetResponse
-import br.pprojects.swapp.models.PlanetWS
 import br.pprojects.swapp.models.SpeciesResponse
 import br.pprojects.swapp.models.SpeciesWS
 import kotlinx.coroutines.Dispatchers

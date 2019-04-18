@@ -1,19 +1,17 @@
 package br.pprojects.swapp.ui.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.pprojects.swapp.R
 import br.pprojects.swapp.models.Species
 import br.pprojects.swapp.ui.EndlessScrollListener
-import br.pprojects.swapp.ui.adapters.PlanetsListAdapter
 import br.pprojects.swapp.ui.adapters.SpeciesListAdapter
-import br.pprojects.swapp.viewmodels.PlanetsViewModel
 import br.pprojects.swapp.viewmodels.SpeciesViewModel
 import kotlinx.android.synthetic.main.species_fragment.*
 

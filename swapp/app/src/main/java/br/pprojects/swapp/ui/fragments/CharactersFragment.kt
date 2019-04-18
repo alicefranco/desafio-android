@@ -1,19 +1,18 @@
 package br.pprojects.swapp.ui.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.pprojects.swapp.*
-import br.pprojects.swapp.R.drawable.*
-import br.pprojects.swapp.ui.adapters.CharacterListAdapter
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.ui.EndlessScrollListener
+import br.pprojects.swapp.ui.adapters.CharacterListAdapter
 import br.pprojects.swapp.viewmodels.CharactersViewModel
 import kotlinx.android.synthetic.main.characters_fragment.*
 
@@ -68,10 +67,10 @@ class CharactersFragment : Fragment() {
         fab_favorites.setOnClickListener{
             viewModel.isFavoriteList = !(viewModel.isFavoriteList)
             if(viewModel.isFavoriteList){
-                fab_favorites.setImageIcon(Icon.createWithResource(context, ic_star_full_white))
+               // fab_favorites.setImageIcon(Icon.createWithResource(context, ic_star_full_white))
             }
             else{
-                fab_favorites.setImageIcon(Icon.createWithResource(context, ic_star_outline_white))
+                //fab_favorites.setImageIcon(Icon.createWithResource(context, ic_star_outline_white))
             }
 
             viewModel.showFavorites().observe(this, Observer<List<Character>> {

@@ -1,8 +1,8 @@
 package br.pprojects.swapp.viewmodels
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import br.pprojects.swapp.models.Character
 import br.pprojects.swapp.repository.CharacterRepository
 
@@ -41,7 +41,7 @@ class CharactersViewModel : ViewModel(){
         characterRepository.updateFavorite(id, value)
     }
 
-    fun showFavorites() : LiveData<List<Character>>  {
+    fun showFavorites() : LiveData<List<Character>> {
         if(isFavoriteList) {
             characterRepository.getAllFavorites()?.let {
                 favorites = it
